@@ -5,12 +5,12 @@
   "scope": "./",
   "icons": [
     {
-      "src": "cbontract.png",
+      "src": "contract.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "cbontract.png",
+      "src": "contract.png",
       "sizes": "512x512",
       "type": "image/png"
     }
