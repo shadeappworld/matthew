@@ -1,0 +1,33 @@
+{
+  "name": "Shade Studio Pro",
+  "short_name": "Studio",
+  "start_url": "index.html",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "cbontract.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "cbontract.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#dbe5e2",
+  "background_color": "#000000",
+  "display": "standalone",
+  "description": "Playtime uninterrupted.",
+  "orientation": "portrait",
+  "categories": [
+    "entertainment"
+  ],
+  "dir": "auto",
+  "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 30
+  },
+  "lang": "en"
+}
