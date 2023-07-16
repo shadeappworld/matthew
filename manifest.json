@@ -1,6 +1,6 @@
 {
-  "name": "Shade Studio Pro",
-  "short_name": "Studio",
+  "name": "Shade Notes Pro",
+  "short_name": "Notes",
   "start_url": "index.html",
   "scope": "./",
   "icons": [
@@ -18,7 +18,7 @@
   "theme_color": "#dbe5e2",
   "background_color": "#000000",
   "display": "standalone",
-  "description": "Playtime uninterrupted.",
+  "description": "Do you want to take notes like a pro? Then you need this notes app! It lets you create, store, and share notes with ease. You can also sort and view your notes in different ways. Whether you need to jot down a shopping list, a memo, or a research project, this app has you covered. Don't miss this opportunity to simplify your life and boost your productivity.",
   "orientation": "portrait",
   "categories": [
     "entertainment"
