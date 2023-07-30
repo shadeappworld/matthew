@@ -19,7 +19,7 @@
 
     .chat-icon {
     position: fixed;
-      bottom: 45px;
+      bottom: 30px;
       left: 30px;
       width: 60px;
       height: 60px;
@@ -47,8 +47,9 @@
 
     .close-btn {
       position: absolute;
-      bottom: 40px;
-      left: 50px;
+      top: 10px;
+      left: 50px
+      right: 10px;
       width: 20px;
       height: 20px;
       background-color: #e74c3c;
@@ -61,28 +62,7 @@
       border-radius: 10%;
     }
     </style>
-    <div class="circle-popup">
-    <div class="chat-icon">🪄</div>
-    <div class="popup-content">
-              
-      <iframe id="popup-iframe" src="smagic.html"></iframe>
-    </div>
-  </div>
-<script>
-    // Get the necessary DOM elements
-    var circlePopup = document.querySelector('.circle-popup');
-    var popupContent = document.querySelector('.popup-content');
-    var closeBtn = document.querySelector('.close-btn');
-
-    // Function to toggle the popup
-    function togglePopup() {
-      popupContent.style.display = popupContent.style.display === 'none' ? 'block' : 'none';
-    }
-
-    // Add event listeners to the elements
-    circlePopup.addEventListener('click', togglePopup);
-    closeBtn.addEventListener('click', togglePopup);
-  </script>
+    
   <script>
       
   </script>
