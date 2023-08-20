@@ -10,7 +10,7 @@ body{
   background: #80acffdc;
 }
 ::selection{
-  color: #fff;
+  color: #618cf8;
   background: #618cf8;
   background: transparent;
   backdrop-filter: blur(50px);
@@ -24,9 +24,9 @@ body{
   backdrop-filter: blur(3px);
 }
 .wrapper li{
-  height: 250px;
+  height: 300px;
   list-style: none;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 15px 20px 20px;
   background: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
@@ -56,8 +56,7 @@ body{
 .add-box p{
   color: #88ABFF;
   font-weight: 500;
-  margin-top: 20p
-  x;
+  margin-top: 20px;
 }
 .note{
   display: flex;
@@ -65,7 +64,7 @@ body{
   justify-content: space-between;
 }
 .note .details{
-  max-height: 165px;
+  max-height: 465px;
   overflow-y: auto;
 }
 .note .details::-webkit-scrollbar,
@@ -157,8 +156,7 @@ body{
   height: 100%;
   width: 100%;
   background: rgba(0,0,0,0.4);
-  background: transparent;
-  backdrop-filter: blur(100px);  
+  background: #80acffdc; 
 }
 .popup-box .popup{
   position: absolute;
@@ -189,6 +187,7 @@ body{
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   background: transparent;
   backdrop-filter: blur(10px);
+  height: 80%;
 }
 .content header{
   padding: 15px 25px;
@@ -220,14 +219,14 @@ form :where(input, textarea){
   outline: none;
   font-size: 17px;
   padding: 0 15px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid #999;
 }
 form :where(input, textarea):focus{
   box-shadow: 0 2px 4px rgba(0,0,0,0.11);
 }
 form .row textarea{
-  height: 150px;
+  height: 350px;
   resize: none;
   padding: 8px 15px;
 }
@@ -291,6 +290,7 @@ form button{
     border-radius: 1rem 1rem 0 0;
     transition: 1.2s;
     background: #ffffff;
+  backdrop-filter: blur(20px);
   }
 }
 
@@ -420,4 +420,8 @@ form button{
     margin-left: auto;
     margin-right: auto;
   }
+}
+.dark-mode {
+  background-color: black;
+  color: white;
 }
