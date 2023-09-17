@@ -7,22 +7,26 @@
   font-family: 'Poppins', sans-serif;
 }
 body{
-  background: #88ABFF;
+  background: #1100ff;
 }
 ::selection{
-  color: #88ABFF;
-  background: #fff;
+  color: #fff;
+  background: #618cf8;
+  background: transparent;
+  backdrop-filter: blur(50px);
 }
 .wrapper{
   margin: 50px;
   display: grid;
   gap: 25px;
   grid-template-columns: repeat(auto-fill, 265px);
+  background: transparent;
+  backdrop-filter: blur(3px);
 }
 .wrapper li{
   height: 250px;
   list-style: none;
-  border-radius: 15px;
+  border-radius: 5px;
   padding: 15px 20px 20px;
   background: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
@@ -37,6 +41,8 @@ body{
   cursor: pointer;
   flex-direction: column;
   justify-content: center;
+  background: transparent;
+  backdrop-filter: blur(3px);  
 }
 .add-box .icon{
   height: 78px;
@@ -73,6 +79,7 @@ body{
 .popup textarea:hover::-webkit-scrollbar-track{
   background: #f1f1f1;
   border-radius: 25px;
+  
 }
 .note .details:hover::-webkit-scrollbar-thumb,
 .popup textarea:hover::-webkit-scrollbar-thumb{
@@ -149,6 +156,8 @@ body{
   height: 100%;
   width: 100%;
   background: rgba(0,0,0,0.4);
+  background: transparent;
+  backdrop-filter: blur(100px);  
 }
 .popup-box .popup{
   position: absolute;
@@ -163,7 +172,7 @@ body{
 .popup-box, .popup{
   opacity: 0;
   pointer-events: none;
-  transition: all 0.25s ease;
+  transition: all 0.50s ease;
 }
 .popup-box.show, .popup-box.show .popup{
   opacity: 1;
@@ -177,6 +186,8 @@ body{
   background: #fff;
   width: calc(100% - 15px);
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  background: transparent;
+  backdrop-filter: blur(10px);
 }
 .content header{
   padding: 15px 25px;
@@ -208,7 +219,7 @@ form :where(input, textarea){
   outline: none;
   font-size: 17px;
   padding: 0 15px;
-  border-radius: 4px;
+  border-radius: 10px;
   border: 1px solid #999;
 }
 form :where(input, textarea):focus{
@@ -227,7 +238,7 @@ form button{
   border: none;
   cursor: pointer;
   font-size: 17px;
-  border-radius: 4px;
+  border-radius: 10px;
   background: #6A93F8;
 }
 
@@ -243,4 +254,174 @@ form button{
   .bottom-content .settings i{
     font-size: 17px;
   }
+}
+
+/*=============== NAV ===============*/
+.nav {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.nav__img {
+  width: 32px;
+  border-radius: 50%;
+}
+
+.nav__logo {
+  color: #000000;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 767px) {
+  .nav__menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    box-shadow: 0 -1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
+    width: 100%;
+    height: 4rem;
+    padding: 0 1rem;
+    display: grid;
+    align-content: center;
+    border-radius: 1rem 1rem 0 0;
+    transition: 1.2s;
+    background: transparent;
+  backdrop-filter: blur(20px);
+  }
+}
+
+.nav__list, 
+.nav__link {
+  display: flex;
+  text-decoration: none;
+}
+
+.nav__link {
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.nav__list {
+  justify-content: space-around;
+  text-decoration: none;
+  list-style: none;
+}
+
+.nav__name {
+  font-size: var(--tiny-font-size);
+  display: none;
+  text-decoration: none;
+}
+
+.nav__icon {
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/*Active link*/
+.active-link {
+  position: relative;
+  color: #000000;
+  transition: .3s;
+  text-decoration: none;
+  list-style: none;
+}
+
+/* Minimalist design, active link */
+/* .active-link::before{
+  content: '';
+  position: absolute;
+  bottom: -.5rem;
+  width: 4px;
+  height: 4px;
+  background-color: var(--first-color);
+  border-radius: 50%;
+} */
+
+/* Change background header */
+.scroll-header {
+  box-shadow: 0 1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
+}
+
+/*=============== MEDIA QUERIES ===============*/
+/* For small devices */
+/* Remove if you choose, the minimalist design */
+@media screen and (max-width: 320px) {
+  .nav__name {
+    display: none;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 576px) {
+  .nav__list {
+    justify-content: center;
+    column-gap: 3rem;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  body {
+    margin: 0;
+  }
+  .section {
+    padding: 7rem 0 2rem;
+  }
+  .nav {
+    height: calc(var(--header-height) + 1.5rem); /* 4.5rem */
+  }
+  .nav__img {
+    display: none;
+  }
+  .nav__icon {
+    display: none;
+    list-style: none;
+  }
+  .nav__name {
+    font-size: var(--normal-font-size);
+    list-style: none;
+    /* display: block; */ /* Minimalist design, visible labels */
+  }
+  .nav__link:hover {
+    color: var(--first-color);
+    text-decoration: none;
+    list-style: none;
+  }
+
+  /* First design, remove if you choose the minimalist design */
+  .active-link::before {
+    content: '';
+    position: absolute;
+    bottom: -.75rem;
+    width: 4px;
+    height: 4px;
+    background-color: var(--first-color);
+    border-radius: 50%;
+    text-decoration: none;
+    list-style: none;
+  }
+
+  /* Minimalist design */
+  /* .active-link::before{
+      bottom: -.75rem;
+  } */
+}
+
+/* For large devices */
+@media screen and (min-width: 1024px) {
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.dark-mode {
+  background-color: black;
+  color: white;
 }
