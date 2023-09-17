@@ -276,6 +276,20 @@
     </div>
          </div>
                   
-       
+       <script>
+    // Get the necessary DOM elements
+    var circlePopup = document.querySelector('.circle-popup');
+    var popupContent = document.querySelector('.popup-content');
+    var closeBtn = document.querySelector('.close-btn');
+
+    // Function to toggle the popup
+    function togglePopup() {
+      popupContent.style.display = popupContent.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Add event listeners to the elements
+    circlePopup.addEventListener('click', togglePopup);
+    closeBtn.addEventListener('click', togglePopup);
+       </script>
     </body>
 </html>
