@@ -18,7 +18,13 @@
 <meta name="msapplication-TileColor" content="#333333">
 <meta name="theme-color" content="#333333">
    <link rel="manifest" href="manifest.json" />
-   
+   <script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", () => {
+				navigator.serviceWorker && navigator.serviceWorker.register("./sw.js");
+			});
+		}
+	</script>
    <!-- SEO and Social Sharing and SEO -->
     <!-- Iconscout Link For Icons -->
     <!-- Google tag (gtag.js) -->
