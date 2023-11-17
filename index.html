@@ -278,7 +278,13 @@ display: none;
       circlePopup.addEventListener('click', togglePopup);
       closeBtn.addEventListener('click', togglePopup);
          </script>
-   
+   	<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Xd68ynd8OVY2cdFsknGMv6tXwTo2nNqgXYEmadyNrRqifJJ0o08pc-skPqI67WQb" charset="UTF-8"></script><script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", () => {
+				navigator.serviceWorker && navigator.serviceWorker.register("./sw.js");
+			});
+		}
+	</script>
   </body>
 
 </html>
