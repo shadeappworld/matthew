@@ -121,44 +121,7 @@
       </li>
     </div>
 
-    <script src="script.js"></script> <section class="playlist">
-      <p class="empty-playlist">
-      <strong></strong>
-      </p>
-      <ol class="songs"></ol>
-    </section>
-
-    <section class="current-song"></section>
-
-    <section class="volume">
-      <label for="volume">Volume</label>
-      <input type="range" id="volume" min="0" max="10" value="10" />
-    </section>
-
-    <section class="app-controls">
-     
-      <button
-        class="main-button"
-        id="record-audio"
-        title="Record an audio clip"
-      >
-        <span>Record an audio clip</span>
-      </button>
-      <button
-      class="main-button"
-      id="add-songs"
-      title="Add new songs to the playlist"
-    >
-      <span>Add new songs</span>
-    </button>
-    <button
-      class="main-button"
-      id="load-custom-skin"
-      title="Apply a custom skin"
-    >
-      <span>Apply a custom skin</span>
-    </button>
-    </section>
+    <script src="script.js"></script> 
     <div class="circle-popup">
       <div class="chat-icon">🪄</div>
           <div class="popup-content">
@@ -166,54 +129,6 @@
                               <iframe id="popup-iframe" src="https://shadeappworld.github.io/notes/beta.html" allowfullscreen="true" draggable="true"></iframe>
                                   </div> 
                                            </div>
-    <canvas id="waveform"></canvas>
-
-    <div id="song-actions-popover" popover>
-      <button class="popover-item song-action" id="song-action-copy-uri">
-        Copy link
-      </button>
-      <button class="popover-item song-action" id="song-action-export">
-        Export...
-      </button>
-      <button class="popover-item song-action" id="song-action-share">
-        Share...
-      </button>
-      <button class="popover-item song-action" id="song-action-delete">
-        Delete
-      </button>
-    </div>
-
-    <div id="playlist-actions-popover" popover>
-      <button
-        class="popover-item playlist-action"
-        id="playlist-action-sortbyartist"
-      >
-        Sort by artist
-      </button>
-      <button
-        class="popover-item playlist-action"
-        id="playlist-action-sortbyalbum"
-      >
-        Sort by album
-      </button>
-      <button
-        class="popover-item playlist-action"
-        id="playlist-action-sortbydateadded"
-      >
-        Sort by most recent
-      </button>
-      <button class="popover-item playlist-action" id="playlist-action-delete">
-        Delete all
-      </button>
-      <button class="popover-item playlist-action" id="playlist-action-export">
-        Export all...
-      </button>
-      <button class="popover-item playlist-action" id="playlist-action-about">
-        About...
-      </button>
-    </div>
- 
-                                                   
     <dialog id="about-dialog">
       <div class="screenshot"></div>
       <img class="logo" src="./favicon-128.png" alt="The PWAmp logo" />
