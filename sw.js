@@ -1,82 +1,144 @@
-const cacheName = "cache1"; // Change value to force update
+const VERSION = "v41";
+const CACHE_NAME = `pwamp-${VERSION}`;
 
+// Those are all the resources our app needs to work.
+// We'll cache them on install.
+const INITIAL_CACHED_RESOURCES = [
+  "./",
+  "./index.html",
+  "./skins/default.css",
+  "./about.css",
+  "./album-art-placeholder.png",
+  "./app.js",
+  "./audio-metadata-parse-worker.js",
+  "./exporter.js",
+  "./file-launch-handler.js",
+  "./importer.js",
+  "./index.html",
+  "./keys.js",
+  "./media-session.js",
+  "./parseAudioMetadata.js",
+  "./player.js",
+  "./popover.min.js",
+  "./protocol-launch-handler.js",
+  "./recorder.js",
+  "./share-target-launch-handler.js",
+  "./skin.js",
+  "./song-ui-factory.js",
+  "./store.js",
+  "./utils.js",
+  "./visualizer.js",
+  "./visualizer.png",
+  "./widgets/mini-player.json",
+  "./widgets/mini-player-data.json",
+  "./idb-keyval.js"
+];
+
+// Add a cache-busting query string to the pre-cached resources.
+// This is to avoid loading these resources from the disk cache.
+const INITIAL_CACHED_RESOURCES_WITH_VERSIONS = INITIAL_CACHED_RESOURCES.map(path => {
+  return `${path}?v=${VERSION}`;
+});
+
+// On install, fill the cache with all the resources we know we need.
+// Install happens when the app is used for the first time, or when a
+// new version of the SW is detected by the browser.
+// In the latter case, the old SW is kept around until the new one is
+// activated by a new client.
 self.addEventListener("install", event => {
-	// Kick out the old service worker
-	self.skipWaiting();
+  self.skipWaiting();
 
-	event.waitUntil(
-		caches.open(cacheName).then(cache => {
-			return cache.addAll([
-				"/",
-				"android-chrome-36x36.png", // Favicon, Android Chrome M39+ with 0.75 screen density
-				"android-chrome-48x48.png", // Favicon, Android Chrome M39+ with 1.0 screen density
-				"android-chrome-72x72.png", // Favicon, Android Chrome M39+ with 1.5 screen density
-				"android-chrome-96x96.png", // Favicon, Android Chrome M39+ with 2.0 screen density
-				"android-chrome-144x144.png", // Favicon, Android Chrome M39+ with 3.0 screen density
-				"android-chrome-192x192.png", // Favicon, Android Chrome M39+ with 4.0 screen density
-				"android-chrome-256x256.png", // Favicon, Android Chrome M47+ Splash screen with 1.5 screen density
-				"android-chrome-384x384.png", // Favicon, Android Chrome M47+ Splash screen with 3.0 screen density
-				"android-chrome-512x512.png", // Favicon, Android Chrome M47+ Splash screen with 4.0 screen density
-				"apple-touch-icon.png", // Favicon, Apple default
-				"apple-touch-icon-57x57.png", // Apple iPhone, Non-retina with iOS6 or prior
-				"apple-touch-icon-60x60.png", // Apple iPhone, Non-retina with iOS7
-				"apple-touch-icon-72x72.png", // Apple iPad, Non-retina with iOS6 or prior
-				"apple-touch-icon-76x76.png", // Apple iPad, Non-retina with iOS7
-				"apple-touch-icon-114x114.png", // Apple iPhone, Retina with iOS6 or prior
-				"apple-touch-icon-120x120.png", // Apple iPhone, Retina with iOS7
-				"apple-touch-icon-144x144.png", // Apple iPad, Retina with iOS6 or prior
-				"apple-touch-icon-152x152.png", // Apple iPad, Retina with iOS7
-				"apple-touch-icon-180x180.png", // Apple iPhone 6 Plus with iOS8
-				"browserconfig.xml", // IE11 icon configuration file
-				"favicon.ico", // Favicon, IE and fallback for other browsers
-				"favicon-16x16.png", // Favicon, default
-				"favicon-32x32.png", // Favicon, Safari on Mac OS
-				"index.html", // Main HTML file
-				"logo.png", // Logo
-				"main.js", // Main Javascript file
-				"manifest.json", // Manifest file
-				"maskable_icon.png", // Favicon, maskable https://web.dev/maskable-icon
-				"mstile-70x70.png", // Favicon, Windows 8 / IE11
-				"mstile-144x144.png", // Favicon, Windows 8 / IE10
-				"mstile-150x150.png", // Favicon, Windows 8 / IE11
-				"mstile-310x150.png", // Favicon, Windows 8 / IE11
-				"mstile-310x310.png", // Favicon, Windows 8 / IE11
-				"safari-pinned-tab.svg", // Favicon, Safari pinned tab
-				"share.jpg", // Social media sharing
-				"style.css", // Main CSS file
-			]);
-		})
-	);
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    cache.addAll(INITIAL_CACHED_RESOURCES_WITH_VERSIONS);
+  })());
 });
 
+// Activate happens after install, either when the app is used for the
+// first time, or when a new version of the SW was installed.
+// We use the activate event to delete old caches and avoid running out of space.
 self.addEventListener("activate", event => {
-	// Delete any non-current cache
-	event.waitUntil(
-		caches.keys().then(keys => {
-			Promise.all(
-				keys.map(key => {
-					if (![cacheName].includes(key)) {
-						return caches.delete(key);
-					}
-				})
-			)
-		})
-	);
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.map(name => {
+      if (name !== CACHE_NAME) {
+        return caches.delete(name);
+      }
+    }));
+    await clients.claim();
+  })());
 });
 
-// Offline-first, cache-first strategy
-// Kick off two asynchronous requests, one to the cache and one to the network
-// If there's a cached version available, use it, but fetch an update for next time.
-// Gets data on screen as quickly as possible, then updates once the network has returned the latest data. 
+// Main fetch handler.
+// A cache-first strategy is used, with a fallback to the network.
+// The static resources fetched here will not have the cache-busting query
+// string. So we need to add it to match the cache.
 self.addEventListener("fetch", event => {
-	event.respondWith(
-		caches.open(cacheName).then(cache => {
-			return cache.match(event.request).then(response => {
-				return response || fetch(event.request).then(networkResponse => {
-					cache.put(event.request, networkResponse.clone());
-					return networkResponse;
-				});
-			})
-		})
-	);
+  const url = new URL(event.request.url);
+
+  // Don't care about other-origin URLs.
+  if (url.origin !== location.origin) {
+    return;
+  }
+
+  // Don't care about anything else than GET.
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
+  // Don't care about widget requests.
+  if (url.pathname.includes("/widgets/")) {
+    return;
+  }
+
+  // On fetch, go to the cache first, and then network.
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const versionedUrl = `${event.request.url}?v=${VERSION}`;
+    const cachedResponse = await cache.match(versionedUrl);
+
+    if (cachedResponse) {
+      return cachedResponse;
+    } else {
+      const fetchResponse = await fetch(versionedUrl);
+      cache.put(versionedUrl, fetchResponse.clone());
+      return fetchResponse;
+    }
+  })());
 });
+
+// Special fetch handler for song file sharing.
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+
+  if (event.request.method !== 'POST' || !url.pathname.includes('/handle-shared-song')) {
+    return;
+  }
+
+  // Immediately redirect to the start URL, there's nothing to see here.
+  event.respondWith(Response.redirect('./'));
+
+  event.waitUntil(async function () {
+    const data = await event.request.formData();
+    const files = data.getAll('audioFiles');
+
+    // Store the song in a special IDB place for the front-end to pick up later
+    // when it starts.
+    // Instead of importing idb-keyval here, we just have a few lines of manual
+    // IDB code, to store the file in the same keyval store that idb-keyval uses.
+    const openReq = indexedDB.open('keyval-store');
+    openReq.onupgradeneeded = e => {
+      const { target: { result: db } } = e;
+      db.createObjectStore("keyval");
+    }
+    openReq.onsuccess = e => {
+      const { target: { result: db } } = e;
+      const transaction = db.transaction("keyval", "readwrite");
+      const store = transaction.objectStore("keyval");
+      store.put(files, 'handle-shared-files');
+    }
+  }());
+});
+
+// Handle the mini-player widget updates in another script.
+importScripts('./sw-widgets.js');
