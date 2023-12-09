@@ -29,6 +29,10 @@ html {
   font-size: 14pt;
 }
 
+html, body {
+  overflow-y: scroll;
+}
+
 @media (max-width: 600px) {
   html {
     font-size: 12pt;
